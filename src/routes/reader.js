@@ -1,5 +1,5 @@
 const express = require('express');
-const { createReader, getAllReaders, getReader, updateReader } = require('../controllers/reader');
+const { createReader, getAllReaders, getReader, updateReader, deleteReader } = require('../controllers/reader');
 const reader = require('../models/reader');
 
 const readerRouter = express.Router();
@@ -11,5 +11,7 @@ readerRouter.get('/', getAllReaders);
 readerRouter.get('/:id', getReader);
 
 readerRouter.patch('/:id', updateReader);
+
+readerRouter.delete('/:id', deleteReader);
 
 module.exports = readerRouter;
