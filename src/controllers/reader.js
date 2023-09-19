@@ -23,3 +23,18 @@ exports.getReader = async (req, res) => {
     res.status(500).json(err.message);
   }
 }
+
+exports.updateReader = async (req, res) => {
+  const { id: readerId } = req.params;
+  const updateData = req.body;
+
+  try {
+    const [ updatedRows ] = await Reader.update(updateData, { where: { id: readerId }});
+    if(!updatedRows) {
+      res.status(404).json({ error: 'The reader could not be found.' });
+    }
+    res.status(200).json(updatedRows);
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+}
