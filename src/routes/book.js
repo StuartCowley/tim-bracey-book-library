@@ -1,5 +1,5 @@
 const express = require('express');
-const { createBook, getAllBooks, getBookById, updateBook } = require('../controllers/book');
+const { createBook, getAllBooks, getBookById, updateBook, deleteBook } = require('../controllers/book');
 
 const bookRouter = express.Router();
 
@@ -10,5 +10,7 @@ bookRouter.get('/', getAllBooks);
 bookRouter.get('/:id', getBookById);
 
 bookRouter.patch('/:id', updateBook);
+
+bookRouter.delete('/:id', deleteBook);
 
 module.exports = bookRouter;
