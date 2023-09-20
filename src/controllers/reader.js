@@ -1,10 +1,6 @@
 const { Reader } = require('../models');
 
 exports.createReader = async (req, res) => {
-  // const { name, email, password } = req.body;
-  // if(!name || !email || !password) {
-  //   res.
-  // }
   try {
     const newReader = await Reader.create(req.body);
   res.status(201).json(newReader);
