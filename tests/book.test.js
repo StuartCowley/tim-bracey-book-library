@@ -31,4 +31,49 @@ describe('/books', () => {
     });
   });
 
+  describe('with records in the database', () => {
+    let books;
+
+    beforeEach(async () => {
+      books = await Promise.all([
+        Book.create({
+          title: 'The Dead Zone',
+          author: 'Stephen King',
+          genre: 'Horror',
+          ISBN: 'abc123'
+        }),
+        Book.create({
+          title: "Salem's Lot",
+          author: 'Stephen King',
+          genre: 'Horror',
+          ISBN: 'def456'
+        }),
+        Book.create({
+          title: 'Friends, Lovers and the Big Terrible Thing',
+          author: 'Matthew Perry',
+          genre: 'Autobiography',
+          ISBN: 'ghi789'
+        }),
+      ]);
+    });
+
+    describe('GET /books', () => {
+      it('gets all books', async () => {
+        const response = await request(app).get('/books');
+
+        expect(response.status).to.equal(200);
+        expect(response.body.length).to.equal(3);
+
+        response.body.forEach((book) => {
+          const expected = books.find((a) => a.id === book.id);
+
+          expect(book.title).to.equal(expected.title);
+          expect(book.author).to.equal(expected.author);
+          expect(book.genre).to.equal(expected.genre);
+          expect(book.ISBN).to.equal(expected.ISBN);
+        });
+      });
+    });
+  });
+
 });
