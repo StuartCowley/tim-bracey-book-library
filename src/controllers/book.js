@@ -5,7 +5,22 @@ exports.createBook = async (req, res) => {
   res.status(201).json(newBook);
 }
 
-exports.getAllBooks = async (req, res) => {
+exports.getAllBooks = async (_, res) => {
   const books = await Book.findAll();
   res.status(200).json(books);
+}
+
+exports.getBookById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const book = await Book.findByPk(id);
+    if(!book) {
+      res.status(404).json({ error: 'The book could not be found.' });
+    }
+    res.status(200).json(book);
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+  
 }
