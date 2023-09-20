@@ -27,6 +27,8 @@ describe('/books', () => {
         expect(response.body.author).to.equal('Stephen King');
         expect(newBookRecord.title).to.equal('The Dead Zone');
         expect(newBookRecord.author).to.equal('Stephen King');
+        expect(newBookRecord.title).to.exist;
+        expect(newBookRecord.author).to.exist;
       });
     });
   });
