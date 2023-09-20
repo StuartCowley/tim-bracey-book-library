@@ -27,6 +27,14 @@ describe('/readers', () => {
         expect(newReaderRecord.name).to.equal('Elizabeth Bennet');
         expect(newReaderRecord.email).to.equal('future_ms_darcy@gmail.com');
         expect(newReaderRecord.password).to.equal('password1');
+        // to exist
+        expect(newReaderRecord.name).to.exist;
+        expect(newReaderRecord.email).to.exist;
+        expect(newReaderRecord.password).to.exist;
+        // to be an email format
+        expect(newReaderRecord.email).to.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g)
+        // password to be 8 or more characters in length
+        expect(newReaderRecord.password.length).to.be.greaterThanOrEqual(8);
       });
     });
   });
