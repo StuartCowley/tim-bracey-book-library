@@ -18,12 +18,10 @@ exports.createItem = model => {
   return async (req, res) => {
     try {
       const newItem = await Model.create(req.body);
-      const newItemReturn = Object.assign({}, newItem.dataValues);
-      if(newItemReturn.password) {
-        delete newItemReturn.password;
+      if(newItem.dataValues.password) {
+        delete newItem.dataValues.password;
       }
-      console.log(newItemReturn);
-      res.status(201).json(newItemReturn);
+      res.status(201).json(newItem);
     } catch (err) {
       const errorMessages = err.errors?.map((e) => e.message) // The ? in this statement is used for optional chaining i.e. if the errors property on the err object doesn't exist, it will return undefined instead of another error.
       res.status(400).json(errorMessages);
