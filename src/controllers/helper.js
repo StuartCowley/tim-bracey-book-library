@@ -20,7 +20,7 @@ exports.createItem = model => {
       const newItem = await Model.create(req.body);
       res.status(201).json(newItem);
     } catch (err) {
-      const errorMessages = err.errors?.map((e) => e.message)
+      const errorMessages = err.errors?.map((e) => e.message) // The ? in this statement is used for optional chaining i.e. if the errors property on the err object doesn't exist, it will return undefined instead of another error.
       res.status(400).json(errorMessages);
     }
   }
