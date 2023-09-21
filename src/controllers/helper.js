@@ -20,7 +20,8 @@ exports.createItem = model => {
       const newItem = await Model.create(req.body);
       res.status(201).json(newItem);
     } catch (err) {
-      res.status(400).json(err.message);
+      const errorMessages = err.errors?.map((e) => e.message)
+      res.status(400).json(errorMessages);
     }
   }
 }
