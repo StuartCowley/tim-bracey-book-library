@@ -13,14 +13,19 @@ const getError404 = model => {
   return { error: `The ${model} could not be found.` };
 }
 
+const removePasswordReturn = item => {
+  if(item.dataValues.password) {
+    delete item.dataValues.password;
+  }
+  return item;
+}
+
 exports.createItem = model => {
   const Model = getModel(model);
   return async (req, res) => {
     try {
       const newItem = await Model.create(req.body);
-      if(newItem.dataValues.password) {
-        delete newItem.dataValues.password;
-      }
+      removePasswordReturn(newItem);
       res.status(201).json(newItem);
     } catch (err) {
       const errorMessages = err.errors?.map((e) => e.message) // The ? in this statement is used for optional chaining i.e. if the errors property on the err object doesn't exist, it will return undefined instead of another error.
@@ -33,6 +38,7 @@ exports.getAllItems = model => {
   const Model = getModel(model);
   return async (_, res) => {
     const allItems = await Model.findAll();
+    allItems.forEach(item => removePasswordReturn(item));
     res.status(200).json(allItems);
   }
 }
@@ -47,6 +53,7 @@ exports.getItemById = model => {
       if(!item) {
         res.status(404).json(getError404(model));
       }
+      removePasswordReturn(item);
       res.status(200).json(item);
     } catch (err) {
       res.status(500).json(err.message);
