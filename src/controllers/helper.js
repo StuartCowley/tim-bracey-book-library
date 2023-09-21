@@ -45,3 +45,21 @@ exports.getItemById = model => {
     }
   }
 }
+
+exports.updateItem = model => {
+  const Model = getModel(model);
+  return async (req, res) => {
+    const { id: itemId } = req.params;
+    const updateData = req.body;
+
+    try {
+      const [ updatedRows ] = await Model.update(updateData, { where: { id: itemId } });
+      if(!updatedRows) {
+        res.status(404).json({ error: `The ${model} could not be found.` });
+      }
+      res.status(200).json(updatedRows);
+    } catch (err) {
+      res.status(400).json(err.message);
+    }
+  }
+}
