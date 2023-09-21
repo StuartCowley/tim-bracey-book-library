@@ -1,9 +1,14 @@
 const { Reader } = require('../models');
+const { createItem, getAllItems } = require('../controllers/helper');
 
-exports.getAllReaders = async (_, res) => {
-  const readers = await Reader.findAll();
-  res.status(200).json(readers);
-}
+exports.createReader = createItem('reader');
+
+exports.getAllReaders = getAllItems('reader');
+
+// exports.getAllReaders = async (_, res) => {
+//   const readers = await Reader.findAll();
+//   res.status(200).json(readers);
+// }
 
 exports.getReader = async (req, res) => {
   try {

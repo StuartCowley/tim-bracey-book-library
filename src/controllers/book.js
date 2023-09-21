@@ -1,9 +1,9 @@
 const { Book } = require('../models');
+const { createItem, getAllItems } = require('../controllers/helper');
 
-exports.getAllBooks = async (_, res) => {
-  const books = await Book.findAll();
-  res.status(200).json(books);
-}
+exports.createBook = createItem('book');
+
+exports.getAllBooks = getAllItems('book');
 
 exports.getBookById = async (req, res) => {
   const { id } = req.params;
