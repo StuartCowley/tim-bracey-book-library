@@ -9,6 +9,10 @@ const getModel = model => {
   return models[model];
 }
 
+const getError404 = model => {
+  return { error: `The ${model} could not be found.` };
+}
+
 exports.createItem = model => {
   const Model = getModel(model);
   return async (req, res) => {
@@ -37,7 +41,7 @@ exports.getItemById = model => {
   
       const item = await Model.findByPk(id);
       if(!item) {
-        res.status(404).json({ error: `The ${model} could not be found.` });
+        res.status(404).json(getError404(model));
       }
       res.status(200).json(item);
     } catch (err) {
@@ -55,11 +59,28 @@ exports.updateItem = model => {
     try {
       const [ updatedRows ] = await Model.update(updateData, { where: { id: itemId } });
       if(!updatedRows) {
-        res.status(404).json({ error: `The ${model} could not be found.` });
+        res.status(404).json(getError404(model));
       }
       res.status(200).json(updatedRows);
     } catch (err) {
       res.status(400).json(err.message);
+    }
+  }
+}
+
+exports.deleteItem = model => {
+  const Model = getModel(model);
+  return async (req, res) => {
+    const { id: itemId } = req.params;
+
+    try {
+      const deletedRows = await Model.destroy({ where: { id: itemId } });
+      if(!deletedRows) {
+        res.status(404).json(getError404(model));
+      }
+      res.status(204).json(deletedRows);
+    } catch (err) {
+      res.status(500).json(err.message);
     }
   }
 }
