@@ -28,3 +28,20 @@ exports.getAllItems = model => {
     res.status(200).json(allItems);
   }
 }
+
+exports.getItemById = model => {
+  const Model = getModel(model);
+  return async (req, res) => {
+    try {
+      const { id } = req.params;
+  
+      const item = await Model.findByPk(id);
+      if(!item) {
+        res.status(404).json({ error: `The ${model} could not be found.` });
+      }
+      res.status(200).json(item);
+    } catch (err) {
+      res.status(500).json(err.message);
+    }
+  }
+}
