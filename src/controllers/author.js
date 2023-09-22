@@ -6,8 +6,16 @@ exports.createAuthor = async (req, res) => {
 }
 
 exports.searchByAuthor = async (req, res) => {
-  const { author: authorName } = req.params;
+  
+  try {
+    const { author: authorName } = req.params;
 
-  const booksByAuthor = await Author.findAll({ where: { author: authorName } });
-  res.status(200).json(booksByAuthor);
+    const booksByAuthor = await Author.findAll({ where: { author: authorName } });
+    if(booksByAuthor.length == 0) {
+      res.status(404).json({ error: 'The author could not be found.' });
+    }
+    res.status(200).json(booksByAuthor);
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
 }

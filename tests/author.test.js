@@ -50,6 +50,13 @@ describe('/authors', () => {
         const [ authorObj ] = response.body;
         expect(authorObj.author).to.equal(authors[0].author);
       });
+
+      it('returns a 404 if the author does not exist', async () => {
+        const response = await request(app).get('/authors/fakeauthor');
+
+        expect(response.status).to.equal(404);
+        expect(response.body.error).to.equal('The author could not be found.');
+      });
     });
   });
 });
