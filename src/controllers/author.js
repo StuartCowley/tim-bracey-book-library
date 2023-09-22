@@ -1,12 +1,10 @@
 const { Author } = require('../models');
+const { createItem } = require('../controllers/helper');
+const authorModel = 'author';
 
-exports.createAuthor = async (req, res) => {
-  const newAuthor = await Author.create(req.body);
-  res.status(201).json(newAuthor);
-}
+exports.createAuthor = createItem(authorModel);
 
 exports.searchByAuthor = async (req, res) => {
-  
   try {
     const { author: authorName } = req.params;
 

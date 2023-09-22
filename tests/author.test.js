@@ -6,7 +6,7 @@ const app = require('../src/app');
 describe('/authors', () => {
   before(async () => Author.sequelize.sync());
 
-  beforeEach(async () => {
+  afterEach(async () => {
     await Author.destroy({ where: {} });
   });
 

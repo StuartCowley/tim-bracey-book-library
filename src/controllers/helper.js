@@ -1,9 +1,11 @@
-const { Book, Reader } = require('../models');
+const { Book, Reader, Author, Genre } = require('../models');
 
 const getModel = model => {
   const models = {
     book: Book,
     reader: Reader,
+    author: Author,
+    genre: Genre,
   };
 
   return models[model];
