@@ -5,9 +5,13 @@ module.exports = (connection, DataTypes) => {
       allowNull: false,
       unique: true,
       validate: {
-        len: {
-          args: [1],
-          msg: "Author cannot be empty",
+        notNull: {
+          args: [true],
+          msg: 'Author is required',
+        },
+        notEmpty: {
+          args: [true],
+          msg: 'Author cannot be empty',
         },
       },
     },

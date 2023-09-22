@@ -5,9 +5,13 @@ module.exports = (connection, DataTypes) => {
       allowNull: false,
       unique: true,
       validate: {
-        len: {
-          args: [1],
-          msg: "Genre cannot be empty",
+        notNull: {
+          args: [true],
+          msg: 'Genre is required',
+        },
+        notEmpty: {
+          args: [true],
+          msg: 'Genre cannot be empty',
         },
       },
     },
