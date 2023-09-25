@@ -23,6 +23,6 @@ module.exports = (connection, DataTypes) => {
     }
   };
 
-  const ReaderModel = connection.define('Reader', schema);
+  const ReaderModel = connection.define('Reader', schema, { timestamps: false });
   return ReaderModel;
 };

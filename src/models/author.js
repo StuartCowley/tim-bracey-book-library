@@ -17,6 +17,6 @@ module.exports = (connection, DataTypes) => {
     },
   };
 
-  const AuthorModel = connection.define('Author', schema);
+  const AuthorModel = connection.define('Author', schema, { timestamps: false });
   return AuthorModel;
 };

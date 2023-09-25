@@ -31,6 +31,6 @@ module.exports = (connection, DataTypes) => {
     ISBN: DataTypes.STRING,
   };
 
-  const BookModel = connection.define('Book', schema);
+  const BookModel = connection.define('Book', schema, { timestamps: false });
   return BookModel;
 };
