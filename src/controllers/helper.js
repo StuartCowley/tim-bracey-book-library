@@ -15,6 +15,14 @@ const getError404 = model => {
   return { error: `The ${model} could not be found.` };
 }
 
+const getOptions = model => {
+  if (model === 'book') return { include: Genre };
+
+  if (model === 'genre') return { include: Book };
+
+  return {};
+}
+
 const removePasswordReturn = item => {
   if(item.dataValues.password) {
     delete item.dataValues.password;
@@ -38,8 +46,9 @@ exports.createItem = model => {
 
 exports.getAllItems = model => {
   const Model = getModel(model);
+  const options = getOptions(model);
   return async (_, res) => {
-    const allItems = await Model.findAll();
+    const allItems = await Model.findAll({...options});
     allItems.forEach(item => removePasswordReturn(item));
     res.status(200).json(allItems);
   }
@@ -47,11 +56,12 @@ exports.getAllItems = model => {
 
 exports.getItemById = model => {
   const Model = getModel(model);
+  const options = getOptions(model);
   return async (req, res) => {
     try {
       const { id } = req.params;
   
-      const item = await Model.findByPk(id);
+      const item = await Model.findByPk(id, { ...options });
       if(!item) {
         res.status(404).json(getError404(model));
       }

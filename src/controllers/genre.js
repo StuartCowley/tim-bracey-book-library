@@ -1,5 +1,5 @@
 const { Genre } = require('../models');
-const { createItem } = require('../controllers/helper');
+const { createItem, getAllItems } = require('../controllers/helper');
 const genreModel = 'genre';
 
 // exports.createGenre = async (req, res) => {
@@ -8,6 +8,8 @@ const genreModel = 'genre';
 // }
 
 exports.createGenre = createItem(genreModel);
+
+exports.getAllGenres = getAllItems(genreModel);
 
 exports.searchByGenre = async (req, res) => {
   try {
