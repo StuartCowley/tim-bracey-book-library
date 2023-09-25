@@ -19,18 +19,3 @@ exports.searchByAuthor = async (req, res) => {
     res.status(500).json(err.message);
   }
 }
-
-// include: [
-//   {
-//     model: Book
-//   },
-//   {
-//     model: Genre
-//   },
-//   {
-//     model: Author,
-//     where: {
-//       author: authorName
-//     },
-//   },
-// ]

@@ -7,7 +7,6 @@ genreRouter.post('/', createGenre);
 
 genreRouter.get('/', getAllGenres);
 
-// genreRouter.get('/:id', getGenreById);
 genreRouter.get('/:genre', searchByGenre);
 
 module.exports = genreRouter;

@@ -62,10 +62,8 @@ exports.getItemById = model => {
   return async (req, res) => {
     try {
       const { id }  = req.params;
-      // console.log(`ID: ${id}`);
   
       const item = await Model.findByPk(id, { ...options });
-      // console.log(`ITEM: ${item}`);
       if(!item) {
         res.status(404).json(getError404(model));
       }
