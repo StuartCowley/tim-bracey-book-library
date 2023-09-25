@@ -16,9 +16,11 @@ const getError404 = model => {
 }
 
 const getOptions = model => {
-  if (model === 'book') return { include: Genre };
+  if (model === 'book') return { include: [{ model: Genre}, {model: Author}] };
 
   if (model === 'genre') return { include: Book };
+
+  if (model === 'author') return { include: Book };
 
   return {};
 }
@@ -59,16 +61,19 @@ exports.getItemById = model => {
   const options = getOptions(model);
   return async (req, res) => {
     try {
-      const { id } = req.params;
+      const { id }  = req.params;
+      console.log(`ID: ${id}`);
   
       const item = await Model.findByPk(id, { ...options });
+      console.log(`ITEM: ${item}`);
       if(!item) {
         res.status(404).json(getError404(model));
       }
       removePasswordReturn(item);
       res.status(200).json(item);
     } catch (err) {
-      res.status(500).json(err.message);
+      // res.status(500).json(err.message);
+      console.log(err);
     }
   }
 }

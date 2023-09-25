@@ -1,14 +1,16 @@
-const { Author } = require('../models');
-const { createItem } = require('../controllers/helper');
+const { Author, Book } = require('../models');
+const { createItem, getAllItems } = require('../controllers/helper');
 const authorModel = 'author';
 
 exports.createAuthor = createItem(authorModel);
+
+exports.getAllAuthors = getAllItems(authorModel);
 
 exports.searchByAuthor = async (req, res) => {
   try {
     const { author: authorName } = req.params;
 
-    const booksByAuthor = await Author.findAll({ where: { author: authorName } });
+    const booksByAuthor = await Author.findAll({ where: { author: authorName }, include: Book });
     if(booksByAuthor.length == 0) {
       res.status(404).json({ error: 'The author could not be found.' });
     }
@@ -17,3 +19,18 @@ exports.searchByAuthor = async (req, res) => {
     res.status(500).json(err.message);
   }
 }
+
+// include: [
+//   {
+//     model: Book
+//   },
+//   {
+//     model: Genre
+//   },
+//   {
+//     model: Author,
+//     where: {
+//       author: authorName
+//     },
+//   },
+// ]
